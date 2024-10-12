@@ -14,9 +14,9 @@ import Loader from "./Loader";
 const CollaborativeRoom = ({
   roomId,
   roomMetadata,
+  users,
+  currentUserType,
 }: CollaborativeRoomProps) => {
-  const currentUserType = "editor";
-
   const [documentTitle, setDocumentTitle] = useState(roomMetadata.title);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -110,7 +110,7 @@ const CollaborativeRoom = ({
               )}
               {loading && <p className="text-sm text-gray-400">Saving…</p>}
             </div>
-            <div className="flex w-full flex-1 justify-end gap-2 sm:gap-3">
+            <div className="flex justify-end flex-1 w-full gap-2 sm:gap-3">
               <ActiveCollaborators />
               <SignedOut>
                 <SignInButton />
@@ -120,7 +120,7 @@ const CollaborativeRoom = ({
               </SignedIn>
             </div>
           </Header>
-          <Editor />
+          <Editor roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
     </RoomProvider>
