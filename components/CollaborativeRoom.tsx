@@ -10,6 +10,8 @@ import { Input } from "./ui/input";
 import Image from "next/image";
 import { updateDocument } from "@/lib/actions/room.actions";
 import Loader from "./Loader";
+import ShareModal from "./ShareModal";
+import { FaSpinner } from "react-icons/fa";
 
 const CollaborativeRoom = ({
   roomId,
@@ -108,10 +110,21 @@ const CollaborativeRoom = ({
               {currentUserType !== "editor" && !editing && (
                 <p className="view-only-tag">View Only</p>
               )}
-              {loading && <p className="text-sm text-gray-400">Saving…</p>}
+              {loading && (
+                <div className="flex items-center">
+                  <FaSpinner className="animate-spin mr-2" />
+                  <p className="text-sm text-gray-400">Saving…</p>
+                </div>
+              )}
             </div>
             <div className="flex justify-end flex-1 w-full gap-2 sm:gap-3">
               <ActiveCollaborators />
+              <ShareModal
+                roomId={roomId}
+                collaborators={users}
+                creatorId={roomMetadata.creatorId}
+                currentUserType={currentUserType}
+              />
               <SignedOut>
                 <SignInButton />
               </SignedOut>
